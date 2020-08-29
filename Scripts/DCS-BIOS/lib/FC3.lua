@@ -27,16 +27,19 @@ local _adiYaw = 0.0
 
 local function LoGetSelfPlane()
 	local self = LoGetSelfData()
+	if self == nil then self = "XXX" end
 	return self.Name
 end
 
 local function LoGetFuelAll()
 	local eng = LoGetEngineInfo()
+	if eng == nil then return end
 	return eng.fuel_internal + eng.fuel_external
 end
 
 local function LoGetGLoad()
 	local au = LoGetAccelerationUnits()
+	if au == nil then return end
 	return au.y
 end
 
@@ -52,19 +55,19 @@ local function BarFuel(fuel, plane)
 	elseif plane == "Su-27" or plane == "Su-33" or plane == "J-11A" then maxFuel = 9400
 	end
 
-	local bar = math.ceil((fuel / maxFuel) * 16)
-	if bar > 16 then bar = 16 end
-
-	return bar
+	local barf = math.ceil((fuel / maxFuel) * 16)
+	if barf > 16 then barf = 16 end
+    if barf == nil then return end
+	return barf
 end
 
 local function BarGLoad(gload)
-	local bar = math.floor((gload / 11) * 16)
+	local barg = math.floor((gload / 11) * 16)
 
-	if bar < 0 then bar = 0
-	elseif bar > 16 then bar = 16 end
-
-	return bar
+	if barg < 0 then barg = 0
+	elseif barg > 16 then barg = 16 end
+    if barg == nil then return end
+	return barg
 end
 
 local function BarVVI(vvi, plane)
@@ -77,7 +80,7 @@ local function BarVVI(vvi, plane)
 	elseif bar > 8 then bar = 8
 	elseif bar > 0 then bar = math.ceil(bar)
 	end
-
+    if bar == nil then return end
 	return bar + 8
 end
 
@@ -181,7 +184,8 @@ moduleBeingDefined.exportHooks[#moduleBeingDefined.exportHooks+1] = function()
 
 	if fuel > 100 then _fuel = string.format("%4d", fuel)
 	else _fuel = string.format("%4.1f", fuel) end
-
+     if _fuel == nil then return end
+	 
 	-- G LOAD
 	if plane == "A-10A" then
 		if gload < -5 then gload = -5
@@ -231,8 +235,8 @@ defineString("FC3_VERTICAL_VELOCITY", function() return _verticalVelocity .. str
 defineIntegerFromGetter("FC3_RADAR_ALTITUDE", function() return _radarAltitude end, 1, "Altitude", "Radar Altitude")
 
 --Engine
-defineString("FC3_RPM_L", function() return _RPMLeft .. string.char(0) end, 3, "Engine", "RPM Left Engine")
-defineString("FC3_RPM_R", function() return _RPMRight .. string.char(0) end, 3, "Engine", "RPM Left Engine")
+defineString("FC3_RPM_L", function() return _RPMLeft .. string.char(0) end, 5, "Engine", "RPM Left Engine")
+defineString("FC3_RPM_R", function() return _RPMRight .. string.char(0) end, 5, "Engine", "RPM Left Engine")
 defineString("FC3_TEMP_L", function() return _TEMPLeft .. string.char(0) end, 3, "Engine", "Temperature Left Engine")
 defineString("FC3_TEMP_R", function() return _TEMPRight .. string.char(0) end, 3, "Engine", "Temperature Left Engine")
 
@@ -273,5 +277,15 @@ end, 1, "External Aircraft Model", "Right Position Light (green)")
 defineIntegerFromGetter("EXT_STROBE", function()
 	if LoGetAircraftDrawArgumentValue(192) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Strobe Light")
+
+defineIntegerFromGetter("EXT_WOW_NOSE", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Nose Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
 
 BIOS.protocol.endModule()

@@ -1637,6 +1637,70 @@ docdata["AV8BNA"] =
                                                                                                      "suffix": "",
                                                                                                        "type": "integer"
                                                                                             } ]
+                                                                        },
+                                                        "EXT_WOW_LEFT": {
+                                                                                "category": "External Aircraft Model",
+                                                                            "control_type": "metadata",
+                                                                             "description": "Weight ON Wheels Left Gear",
+                                                                              "identifier": "EXT_WOW_LEFT",
+                                                                                  "inputs": [  ],
+                                                                                 "outputs": [ {
+                                                                                                    "address": 30966,
+                                                                                                "description": "Weight ON Wheels Left Gear",
+                                                                                                       "mask": 512,
+                                                                                                  "max_value": 1,
+                                                                                                   "shift_by": 9,
+                                                                                                     "suffix": "",
+                                                                                                       "type": "integer"
+                                                                                            } ]
+                                                                        },
+                                                        "EXT_WOW_NOSE": {
+                                                                                "category": "External Aircraft Model",
+                                                                            "control_type": "metadata",
+                                                                             "description": "Weight ON Wheels Nose Gear",
+                                                                              "identifier": "EXT_WOW_NOSE",
+                                                                                  "inputs": [  ],
+                                                                                 "outputs": [ {
+                                                                                                    "address": 30966,
+                                                                                                "description": "Weight ON Wheels Nose Gear",
+                                                                                                       "mask": 128,
+                                                                                                  "max_value": 1,
+                                                                                                   "shift_by": 7,
+                                                                                                     "suffix": "",
+                                                                                                       "type": "integer"
+                                                                                            } ]
+                                                                        },
+                                                       "EXT_WOW_RIGHT": {
+                                                                                "category": "External Aircraft Model",
+                                                                            "control_type": "metadata",
+                                                                             "description": "Weight ON Wheels Right Gear",
+                                                                              "identifier": "EXT_WOW_RIGHT",
+                                                                                  "inputs": [  ],
+                                                                                 "outputs": [ {
+                                                                                                    "address": 30966,
+                                                                                                "description": "Weight ON Wheels Right Gear",
+                                                                                                       "mask": 256,
+                                                                                                  "max_value": 1,
+                                                                                                   "shift_by": 8,
+                                                                                                     "suffix": "",
+                                                                                                       "type": "integer"
+                                                                                            } ]
+                                                                        },
+                                                        "EXT_WOW_TAIL": {
+                                                                                "category": "External Aircraft Model",
+                                                                            "control_type": "metadata",
+                                                                             "description": "Weight ON Wheels Tail Gear",
+                                                                              "identifier": "EXT_WOW_TAIL",
+                                                                                  "inputs": [  ],
+                                                                                 "outputs": [ {
+                                                                                                    "address": 30966,
+                                                                                                "description": "Weight ON Wheels Tail Gear",
+                                                                                                       "mask": 1024,
+                                                                                                  "max_value": 1,
+                                                                                                   "shift_by": 10,
+                                                                                                     "suffix": "",
+                                                                                                       "type": "integer"
+                                                                                            } ]
                                                                         }
                                             },
                          "External Lights": {
@@ -5461,14 +5525,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Left Display Contrast",
                                                                                  "identifier": "MPCD_L_CONTRAST",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30762,
                                                                                                    "description": "selector position",
@@ -5478,7 +5539,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                 "MPCD_L_DAY_NIGHT": {
                                                                                    "category": "MPCD Left",
@@ -5486,14 +5547,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Left Display DAY/NIGHT Mode",
                                                                                  "identifier": "MPCD_L_DAY_NIGHT",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30762,
                                                                                                    "description": "selector position",
@@ -5503,7 +5561,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                      "MPCD_L_GAIN": {
                                                                                    "category": "MPCD Left",
@@ -5511,14 +5569,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Left Display Gain",
                                                                                  "identifier": "MPCD_L_GAIN",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30762,
                                                                                                    "description": "selector position",
@@ -5528,7 +5583,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                    "MPCD_L_SYMBOL": {
                                                                                    "category": "MPCD Left",
@@ -5536,14 +5591,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Left Display Symbology",
                                                                                  "identifier": "MPCD_L_SYMBOL",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30762,
                                                                                                    "description": "selector position",
@@ -5553,7 +5605,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     }
                                             },
                               "MPCD Right": {
@@ -6188,14 +6240,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Right Display Contrast",
                                                                                  "identifier": "MPCD_R_CONTRAST",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30768,
                                                                                                    "description": "selector position",
@@ -6205,7 +6254,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                 "MPCD_R_DAY_NIGHT": {
                                                                                    "category": "MPCD Right",
@@ -6213,14 +6262,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Right Display DAY/NIGHT Mode",
                                                                                  "identifier": "MPCD_R_DAY_NIGHT",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30768,
                                                                                                    "description": "selector position",
@@ -6230,7 +6276,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                      "MPCD_R_GAIN": {
                                                                                    "category": "MPCD Right",
@@ -6238,14 +6284,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Right Display Gain",
                                                                                  "identifier": "MPCD_R_GAIN",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30768,
                                                                                                    "description": "selector position",
@@ -6255,7 +6298,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     },
                                                    "MPCD_R_SYMBOL": {
                                                                                    "category": "MPCD Right",
@@ -6263,14 +6306,11 @@ docdata["AV8BNA"] =
                                                                                 "description": "MPCD Right Display Symbology",
                                                                                  "identifier": "MPCD_R_SYMBOL",
                                                                                      "inputs": [ {
-                                                                                                   "description": "switch to previous or next state",
-                                                                                                     "interface": "fixed_step"
-                                                                                               }, {
-                                                                                                   "description": "set position",
+                                                                                                   "description": "set the switch position -- 0 = held left/down, 1 = centered, 2 = held right/up",
                                                                                                      "interface": "set_state",
                                                                                                      "max_value": 2
                                                                                                } ],
-                                                                        "momentary_positions": "none",
+                                                                        "momentary_positions": "first_and_last",
                                                                                     "outputs": [ {
                                                                                                        "address": 30768,
                                                                                                    "description": "selector position",
@@ -6280,7 +6320,7 @@ docdata["AV8BNA"] =
                                                                                                         "suffix": "",
                                                                                                           "type": "integer"
                                                                                                } ],
-                                                                           "physical_variant": "3_position_switch"
+                                                                           "physical_variant": "rocker_switch"
                                                                     }
                                             },
                    "Master Armament Panel": {

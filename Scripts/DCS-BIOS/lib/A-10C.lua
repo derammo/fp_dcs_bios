@@ -85,6 +85,7 @@ end
 
 
 local vhf_lut1 = {
+    ["0.0"] = "3",
     ["0.15"] = "3",
     ["0.20"] = "4",
     ["0.25"] = "5",
@@ -102,18 +103,26 @@ local vhf_lut1 = {
 
 local function getVhfAmFreqency()
     local freq1 = vhf_lut1[string.format("%.2f",GetDevice(0):get_argument_value(143))]
+	if freq1 == nil then freq1 = "3" end
     local freq2 = string.format("%1.1f", GetDevice(0):get_argument_value(144)):sub(3)
+	if freq2 == nil then freq2 = "0" end
     local freq3 = string.format("%1.1f", GetDevice(0):get_argument_value(145)):sub(3)
+	if freq3 == nil then freq3 = "0" end
     local freq4 = string.format("%1.2f", GetDevice(0):get_argument_value(146)):sub(3)
+	if freq4 == nil then freq4 = "00" end
 
     return freq1 .. freq2 .. "." .. freq3 .. freq4
 end
 
 local function getVhfFmFreqency()
     local freq1 = vhf_lut1[string.format("%.2f",GetDevice(0):get_argument_value(157))]
+	if freq1 == nil then freq1 = "3" end
     local freq2 = string.format("%1.1f", GetDevice(0):get_argument_value(158)):sub(3)
+	if freq2 == nil then freq2 = "0" end
     local freq3 = string.format("%1.1f", GetDevice(0):get_argument_value(159)):sub(3)
+	if freq3 == nil then freq3 = "0" end
     local freq4 = string.format("%1.2f", GetDevice(0):get_argument_value(160)):sub(3)
+	if freq4 == nil then freq4 = "00" end
 
     return freq1 .. freq2 .. "." .. freq3 .. freq4
 end
@@ -161,7 +170,9 @@ local function getILSFrequency()
         ["0.9"] = "95"
     }
     local mhz = ils_mhz_lut[string.format("%.1f", GetDevice(0):get_argument_value(251))]
+	if mhz == nil then mhz = "108" end
     local khz = ils_khz_lut[string.format("%.01f", GetDevice(0):get_argument_value(252))]
+	if khz == nil then khz = "10" end
     return mhz .. "." .. khz
 end
 
@@ -466,7 +477,6 @@ defineRockerSwitch("RMFD_CON", 3, 3030, 3032, 3031, 3032, 349, "Right MFCD", "CO
 defineRockerSwitch("RMFD_SYM", 3, 3033, 3035, 3034, 3035, 350, "Right MFCD", "SYM")
 defineTumb("RMFD_PWR", 3, 3036, 351, 0.1, {0.0, 0.2}, nil, false, "Right MFCD", "PWR OFF - NT - DAY")
 
-
 definePushButton("CMSP_ARW1", 4, 3001, 352, "CMSP", "SET Button 1")
 definePushButton("CMSP_ARW2", 4, 3002, 353, "CMSP", "SET Button 2")
 definePushButton("CMSP_ARW3", 4, 3003, 354, "CMSP", "SET Button 3")
@@ -651,7 +661,7 @@ definePushButton("CDU_BCK", 9, 3056, 467, "CDU", "BCK")
 definePushButton("CDU_SPC", 9, 3057, 468, "CDU", "SPC")
 definePushButton("CDU_CLR", 9, 3058, 470, "CDU", "CLR")
 definePushButton("CDU_FA", 9, 3059, 471, "CDU", "FA")
-defineRockerSwitch("CDU_BRT", 9, 3060, 3060, 3061, 3061, 424, "CDU", "DIMBRT Rocker (No Function)")
+defineRockerSwitch("CDU_BRT", 9, 3060, 3060, 3061, 3061, 424, "CDU", "CDU Display Brightness Adjustment")
 defineRockerSwitch("CDU_PG", 9, 3062, 3062, 3063, 3063, 463, "CDU", "PG Rocker")
 defineRockerSwitch("CDU_SCROLL", 9, 3064, 3064, 3065, 3065, 469, "CDU", "Scroll Waypoint Names (Blank Rocker)")
 defineRockerSwitch("CDU_DATA", 9, 3066, 3066, 3067, 3067, 472, "CDU", "+/- Rocker")
@@ -1014,7 +1024,7 @@ moduleBeingDefined.inputProcessors["SET_UHF"] = function(freq)
 	GetDevice(54):set_frequency(freq*1000)
 end
 
-defineSetCommandTumb("VHFAM_PRESET", 55, 3001, 137, 0.01, {0.0, 0.19}, {" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, true, "VHF AM Radio", "Preset Channel Selector")
+defineRadioWheel("VHFAM_PRESET", 55, 3001, 3001, {-0.01, 0.01}, 137, 0.01, {0, 0.2}, {" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, "VHF AM Radio", "Preset Channel Selector")
 defineMultipositionSwitch("VHFAM_MODE", 55, 3003, 138, 3, 0.1, "VHF AM Radio", "Mode OFF/TR/DF")
 defineMultipositionSwitch("VHFAM_FREQEMER", 55, 3004, 135, 4, 0.1, "VHF AM Radio", "Frequency Selection Dial FM/AM/MAN/PRE")
 definePotentiometer("VHFAM_VOL", 55, 3005, 133, {0, 1}, "VHF AM Radio", "VHF AM Volume Control")
@@ -1033,7 +1043,7 @@ moduleBeingDefined.inputProcessors["SET_VHF_AM"] = function(freq)
 	GetDevice(55):set_frequency(freq*1000)
 end
 
-defineSetCommandTumb("VHFFM_PRESET", 56, 3001, 151, 0.01, {0.0, 0.19}, {" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, true, "VHF FM Radio", "Preset Channel Selector")
+defineRadioWheel("VHFFM_PRESET", 56, 3001, 3001, {-0.01, 0.01}, 151, 0.01, {0, 0.2}, {" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, "VHF FM Radio", "Preset Channel Selector")
 defineMultipositionSwitch("VHFFM_MODE", 56, 3003, 152, 3, 0.1, "VHF FM Radio", "Mode OFF/TR/DF")
 defineMultipositionSwitch("VHFFM_FREQEMER", 56, 3004, 149, 4, 0.1, "VHF FM Radio", "Frequency Selection Dial FM/AM/MAN/PRE")
 definePotentiometer("VHFFM_VOL", 56, 3005, 147, {0, 1}, "VHF FM Radio", "VHF FM Volume Control")
@@ -1307,14 +1317,12 @@ defineIntegerFromGetter("EXT_FORMATION_LIGHTS", function()
 	return math.floor(LoGetAircraftDrawArgumentValue(200)*65535)
 end, 65535, "External Aircraft Model", "Formation Lights")
 
-
 defineIntegerFromGetter("EXT_POSITION_LIGHT_LEFT", function()
 	if LoGetAircraftDrawArgumentValue(190) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Left Position Light (red)")
 defineIntegerFromGetter("EXT_POSITION_LIGHT_RIGHT", function()
 	if LoGetAircraftDrawArgumentValue(191) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Right Position Light (green)")
-
 
 defineIntegerFromGetter("EXT_STROBE_TAIL", function()
 	if LoGetAircraftDrawArgumentValue(192) > 0 then return 1 else return 0 end
@@ -1325,6 +1333,16 @@ end, 1, "External Aircraft Model", "Left Strobe Light")
 defineIntegerFromGetter("EXT_STROBE_RIGHT", function()
 	if LoGetAircraftDrawArgumentValue(196) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Right Strobe Light")
+
+defineIntegerFromGetter("EXT_WOW_NOSE", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Nose Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
 
 defineFloat("CANOPY_VALUE", 7, {0.0, 1.0}, "Misc", "Canopy Position")
 
@@ -1345,5 +1363,14 @@ definePushButton("CMSC_UNK", 5, 3005, 371, "CMSC", "Display Unknown Threats")
 defineString("ILS_FREQUENCY_S", getILSFrequency, 6, "ILS Panel", "ILS Frequency (String)")
 defineString("VHF_AM_FREQUENCY_S", getVhfAmFreqency, 7, "VHF AM Radio", "VHF AM Frequency (String)")
 defineString("VHF_FM_FREQUENCY_S", getVhfFmFreqency, 7, "VHF FM Radio", "VHF FM Frequency (String)")
+
+defineFloat("INT_CONSOLE_L_BRIGHT", 800, {0, 1}, "Light System Control Panel", "Console Light Brightness")
+defineFloat("INT_ENG_INST_L_BRIGHT", 801, {0, 1}, "Light System Control Panel", "Engine Instrument Light Brightness")
+defineFloat("INT_FLT_INST_L_BRIGHT", 802, {0, 1}, "Light System Control Panel", "Flight Instruments Light Brightness")
+defineFloat("INT_AUX_INST_L_BRIGHT", 803, {0, 1}, "Light System Control Panel", "Auxiliary Instruments Light Brightness")
+defineFloat("INT_FLOOD_L_BRIGHT", 806, {0, 1}, "Light System Control Panel", "Flood Light Brightness")
+defineFloat("INT_CAUTION_L_BRIGHT", 905, {0, 1}, "Light System Control Panel", "Caution Lights Brightness")
+
+defineToggleSwitch("MIRROR_TOGGLE", 0, 3001, 719, "Misc", "Toggle Mirrors")
 
 BIOS.protocol.endModule()

@@ -12,17 +12,12 @@ local defineIndicatorLight = BIOS.util.defineIndicatorLight
 local definePushButton = BIOS.util.definePushButton
 local definePotentiometer = BIOS.util.definePotentiometer
 local defineRotary = BIOS.util.defineRotary
-local defineSetCommandTumb = BIOS.util.defineSetCommandTumb
 local defineTumb = BIOS.util.defineTumb
 local defineToggleSwitch = BIOS.util.defineToggleSwitch
-local defineToggleSwitchToggleOnly = BIOS.util.defineToggleSwitchToggleOnly
-local defineFixedStepTumb = BIOS.util.defineFixedStepTumb
-local defineFixedStepInput = BIOS.util.defineFixedStepInput
-local defineVariableStepTumb = BIOS.util.defineVariableStepTumb
 local defineString = BIOS.util.defineString
-local defineRockerSwitch = BIOS.util.defineRockerSwitch
-local defineMultipositionSwitch = BIOS.util.defineMultipositionSwitch
 local defineIntegerFromGetter = BIOS.util.defineIntegerFromGetter
+
+-- remove Arg# Pilot 540
 
 defineTumb("GEN_ON_OFF",1, 3075, 114, 1, {0,1}, nil, false, "Generator", "Generator On/Off")
 defineTumb("GEN_ON",1, 3077, 114, 1,  {1, 1}, nil, false, "Generator", "Generator On")
@@ -227,7 +222,7 @@ defineTumb("FLAPS_RETRACT",4, 3011, 144, 1, {0,1}, nil, false, "Flaps", "Retract
 definePushButton("ORD_EMG_DUMP", 3, 3018, 92, "Weapon Control", "Ordinance Emergency Release")
 
 -- Flare Gun Trigger
-defineTumb("FLARE_GUN",4, 3095, 72, 1, {0,1}, nil, false, "Flare Gun", "Fire Flare Gun")
+definePushButton("FLARE_GUN",20, 3001, 72, "Flare Gun", "Fire Flare Gun")
 
 
 -- Throttle Lever
@@ -418,8 +413,29 @@ defineIntegerFromGetter("EXT_POSITION_LIGHT_LEFT", function()
 	if LoGetAircraftDrawArgumentValue(190) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Left Position Light (red)")
 defineIntegerFromGetter("EXT_POSITION_LIGHT_RIGHT", function()
-	if LoGetAircraftDrawArgumentValue(192) > 0 then return 1 else return 0 end
+	if LoGetAircraftDrawArgumentValue(191) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Right Position Light (green)")
+defineIntegerFromGetter("EXT_POSITION_LIGHT_TAIL", function()
+	if LoGetAircraftDrawArgumentValue(192) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Tail Position Light (white)")
+
+defineIntegerFromGetter("EXT_WOW_NOSE", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Nose Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
+
+defineToggleSwitch("COCKPIT_VENT_L", 4, 3060, 98, "Cockpit", "Left Cockpit Vent")
+defineToggleSwitch("COCKPIT_VENT_R", 4, 3062, 99, "Cockpit", "Right Cockpit Vent")
+
+definePushButton("FLARE_GUN_GN",20, 3003, 165, "Flare Gun", "Fire Flare Gun Green")
+definePushButton("FLARE_GUN_RD",20, 3004, 165, "Flare Gun", "Fire Flare Gun Red")
+definePushButton("FLARE_GUN_WH",20, 3005, 165, "Flare Gun", "Fire Flare Gun White")
+definePushButton("FLARE_GUN_YE",20, 3006, 165, "Flare Gun", "Fire Flare Gun Yellow")
 
 
 BIOS.protocol.endModule()

@@ -1,8 +1,7 @@
 BIOS.protocol.beginModule("MB-339PAN", 0x8200)
 BIOS.protocol.setExportModuleAircrafts({"MB-339PAN"})
-
---For the mod visit: http://www.freccetricolorivirtuali.net/mod%20ftv.htm
---for MB-339_v2.0
+--by WarLord (aka BlackLibrary)
+--for MB-339_v2.0.1
 
 local inputProcessors = moduleBeingDefined.inputProcessors
 local documentation = moduleBeingDefined.documentation
@@ -300,5 +299,15 @@ end, 1, "External Aircraft Model", "Position Lights")
 defineIntegerFromGetter("EXT_STROBE_LIGHTS", function()
 	if LoGetAircraftDrawArgumentValue(192) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Strobe Lights")
+
+defineIntegerFromGetter("EXT_WOW_NOSE", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Nose Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
 
 BIOS.protocol.endModule()

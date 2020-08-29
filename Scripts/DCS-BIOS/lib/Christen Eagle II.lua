@@ -1,5 +1,6 @@
 BIOS.protocol.beginModule("Christen Eagle II", 0x2800)
 BIOS.protocol.setExportModuleAircrafts({"Christen Eagle II"})
+--by WarLord (aka BlackLibrary)
 
 local documentation = moduleBeingDefined.documentation
 
@@ -51,7 +52,7 @@ defineToggleSwitch("ALTER_FUSE", 7, 3073, 355,"Electric" , "Alternator Fuse")
 definePushButton("V_A_METER", 7, 3043, 377,"Electric" , "Volt/Ampere Meter mode (Voltage / Amperage)")
 
 --Lights
-defineToggleSwitch("NAV_LIGHTS", 13, 3051, 359,"Lights" , "Nav Lights")
+defineToggleSwitch("NAV_LIGHTS", 13, 3051, 459,"Lights" , "Nav Lights")
 defineToggleSwitch("LAND_LIGHTS", 13, 3054, 360,"Lights" , "Landing Lights")
 definePotentiometer("COCKPIT_LIGHTS", 13, 3053, 361, {0, 1},"Lights" , "Cockpit Lights")
 defineToggleSwitch("COCKPIT_LIGHTS_RED", 13, 3055, 397,"Lights" , "Red Cockpit Lights")
@@ -90,6 +91,7 @@ defineFloat("RPM", 318, {0.0, 0.120, 0.271, 0.416, 0.557, 0.696, 0.845, 1.0}, "G
 defineFloat("EGT", 319, {0.0, 0.260, 0.481, 0.661, 0.820, 0.979}, "Gauges", "EGT")
 defineFloat("EGT_MAX", 320, {0.0, 0.289, 0.505, 0.676, 0.838, 0.992}, "Gauges", "EGT Max")
 defineFloat("VAMETER", 376, {0.104, 0.260, 0.395, 0.564, 0.704, 0.856, 0.996}, "Gauges", "Volt-Ampermeter Gauge")
+defineFloat("CANOPY_POS", 400, {0, 1}, "Canopy", "Canopy Position")
 
 --Externals
 defineIntegerFromGetter("EXT_POSITION_LIGHT_LEFT", function()
@@ -98,5 +100,15 @@ end, 1, "External Aircraft Model", "Left Position Light (red)")
 defineIntegerFromGetter("EXT_POSITION_LIGHT_RIGHT", function()
 	if LoGetAircraftDrawArgumentValue(191) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Right Position Light (green)")
+
+defineIntegerFromGetter("EXT_WOW_TAIL", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Tail Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
 
 BIOS.protocol.endModule()

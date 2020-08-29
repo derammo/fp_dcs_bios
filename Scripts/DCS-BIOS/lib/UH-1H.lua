@@ -317,7 +317,7 @@ defineToggleSwitchToggleOnly("CLOCK_ADJUST_PULL", 30, 3001, 131, "Clock", "Adjus
 defineRotary("CLOCK_ADJUST", 30, 3002, 130, "Clock", "Adjustment Dial")
 
 definePotentiometer("THROTTLE", 3, 3024, 250, {-1.0, 0.4}, "Collective", "Throttle Axis")
-defineToggleSwitch("THROTTLE_STOP", 3, 3027, 206, "Collective", "Throttle Stop")
+defineToggleSwitch("THROTTLE_STOP", 3, 3027, 206, "Collective", "Throttle Stop Switch, ON/OFF")
 
 defineToggleSwitch("ENG_DEICE", 3, 3002, 84, "Engine Panel", "De-Ice Switch")
 defineToggleSwitch("LOW_RPM_AUDIO", 3, 3021, 80, "Engine Panel", "Low RPM Audio Switch")
@@ -341,8 +341,8 @@ defineRotary("ALT_ADJ_PLT", 18, 3001, 181, "Front Dash", "Pilot Altimeter Pressu
 
 definePushButton("VHFCOMM_TEST_SW", 20, 3002, 6, "VHF COMM Radio", "Communication Test Button")
 
-defineTumb("VHFCOMM_PWR", 20, 3001, 7, 0.15, {0.85, 1.0}, nil, false, "VHF COMM Radio", "Power")
-definePotentiometer("VHFCOMM_VOL", 20, 3003, 8, {0, 0.65}, "VHF COMM Radio", "Volume Control (step size less than 8192 may not work)")
+defineTumb("VHFCOMM_PWR", 20, 3001, 5, 0.15, {0.85, 1.0}, nil, false, "VHF COMM Radio", "Power")
+definePotentiometer("VHFCOMM_VOL", 20, 3003, 9, {0, 0.65}, "VHF COMM Radio", "Volume Control (step size less than 8192 may not work)")
 documentation["VHF COMM Radio"]["VHFCOMM_VOL"].inputs[2].suggested_step = 8192
 
 local function getVhfCommFreq()
@@ -350,8 +350,8 @@ local function getVhfCommFreq()
 	return string.format("1%.0f%.0f", a(1)*10, a(2)*10) .. "." .. string.format("%.0f%02.0f", a(3)*10, a(4)*100)
 end
 defineString("VHFCOMM_FREQ", getVhfCommFreq, 7, "VHF COMM Radio", "VHF Frequency")
-defineFixedStepTumb("VHFCOMM_MHZ", 20, 3004, 5, 0.1, {0, 1}, {-0.1, 0.1}, nil, "VHF COMM Radio", "VHF MHz Selector")
-defineFixedStepTumb("VHFCOMM_KHZ", 20, 3005, 9, 0.1, {0, 1}, {-0.1, 0.1}, nil, "VHF COMM Radio", "VHF KHz Selector")
+defineFixedStepTumb("VHFCOMM_MHZ", 20, 3004, 7, 0.1, {0, 1}, {-0.1, 0.1}, nil, "VHF COMM Radio", "VHF MHz Selector")
+defineFixedStepTumb("VHFCOMM_KHZ", 20, 3005, 8, 0.1, {0, 1}, {-0.1, 0.1}, nil, "VHF COMM Radio", "VHF KHz Selector")
 
 definePotentiometer("INT_VOL", 21, 3007, 29, {0.3, 1.0}, "Intercom Panel", "Intercom Volume")
 defineToggleSwitch("INT_RCVR1_SW", 21, 3001, 23, "Intercom Panel", "Receiver 1 Switch (VHF AM)")
@@ -515,6 +515,9 @@ end, 1, "External Aircraft Model", "Right Position Light (green)")
 defineIntegerFromGetter("EXT_STROBE", function()
 	if LoGetAircraftDrawArgumentValue(193) > 0 then return 1 else return 0 end
 end, 1, "External Aircraft Model", "Strobe Light")
+defineIntegerFromGetter("EXT_WOW_SKID", function()
+	if LoGetAircraftDrawArgumentValue(104) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Skids")
 
 
 -- Radar Altimeter Display, Chaff and Flare counters as numeric values
@@ -549,5 +552,17 @@ local function getChaffCountAsNumber()
     return tonumber(digit1 .. digit2)
 end
 defineIntegerFromGetter("CM_CHAFFCNT_DISPLAY", getChaffCountAsNumber, 60, "Countermeasures", "Chaff Counter Display (Number)")
+
+definePotentiometer("THROTTLE2", 3, 3030, 250, {-1.0, 0.4}, "Collective", "Copilot Throttle Axis")
+defineToggleSwitch("THROTTLE_STOP2", 3, 3031, 213, "Collective", "Copilot Throttle Stop Switch, ON/OFF")
+defineRockerSwitch("GOV_RPM_SW2", 3, 3029, 3029, 3029, 3029, 210, "Collective", "Copilot Governor RPM Rocker Switch")
+
+defineToggleSwitch("LDG_LIGHT_SW2", 7, 3034, 209, "Collective", "Copilot Landing Lights Switch")
+defineTumb("SEARCH_LIGHT_SW2", 7, 3035, 208, 1, {-1, 1}, nil, false, "Collective", "Copilot Search Light STOW / OFF / ON")
+defineTumb("LDG_LT_CTRL2", 7, 3036, 212, 1, {-1, 1}, nil, false, "Collective", "Copilot Landing Lights Control Switch")
+
+defineFloat("SBY_COMPASS_HDG", 272, {-1, 1}, "Front Dash", "Standby Compass Heading")
+defineFloat("SBY_COMPASS_PITCH", 274, {-1, 1}, "Front Dash", "Standby Compass Pitch")
+defineFloat("SBY_COMPASS_BANK", 273, {-1, 1}, "Front Dash", "Standby Compass Bank")
 
 BIOS.protocol.endModule()

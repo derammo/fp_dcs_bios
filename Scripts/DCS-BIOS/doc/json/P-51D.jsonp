@@ -506,6 +506,22 @@ docdata["P-51D"] =
                                                                                                      "type": "integer"
                                                                                           } ]
                                                                       },
+                                                        "CANOPY_POS": {
+                                                                              "category": "Cockpit Mechanical",
+                                                                          "control_type": "analog_gauge",
+                                                                           "description": "Canopy Position",
+                                                                            "identifier": "CANOPY_POS",
+                                                                                "inputs": [  ],
+                                                                               "outputs": [ {
+                                                                                                  "address": 20672,
+                                                                                              "description": "gauge position",
+                                                                                                     "mask": 65535,
+                                                                                                "max_value": 65535,
+                                                                                                 "shift_by": 0,
+                                                                                                   "suffix": "",
+                                                                                                     "type": "integer"
+                                                                                          } ]
+                                                                      },
                                                      "MICROPHONE_ON": {
                                                                                   "api_variant": "momentary_last_position",
                                                                                      "category": "Cockpit Mechanical",
@@ -560,6 +576,38 @@ docdata["P-51D"] =
                                                                                                  "type": "integer"
                                                                                       } ]
                                                                   },
+                                                "AILERON_TRIM_G": {
+                                                                          "category": "Control System",
+                                                                      "control_type": "analog_gauge",
+                                                                       "description": "Aileron Trim Gauge",
+                                                                        "identifier": "AILERON_TRIM_G",
+                                                                            "inputs": [  ],
+                                                                           "outputs": [ {
+                                                                                              "address": 20674,
+                                                                                          "description": "gauge position",
+                                                                                                 "mask": 65535,
+                                                                                            "max_value": 65535,
+                                                                                             "shift_by": 0,
+                                                                                               "suffix": "",
+                                                                                                 "type": "integer"
+                                                                                      } ]
+                                                                  },
+                                              "CONTR_LOCK_BRACK": {
+                                                                          "category": "Control System",
+                                                                      "control_type": "analog_gauge",
+                                                                       "description": "Control Lock Bracket",
+                                                                        "identifier": "CONTR_LOCK_BRACK",
+                                                                            "inputs": [  ],
+                                                                           "outputs": [ {
+                                                                                              "address": 20680,
+                                                                                          "description": "gauge position",
+                                                                                                 "mask": 65535,
+                                                                                            "max_value": 65535,
+                                                                                             "shift_by": 0,
+                                                                                               "suffix": "",
+                                                                                                 "type": "integer"
+                                                                                      } ]
+                                                                  },
                                                  "ELEVATOR_TRIM": {
                                                                        "api_variant": "multiturn",
                                                                           "category": "Control System",
@@ -579,6 +627,22 @@ docdata["P-51D"] =
                                                                                             "max_value": 65535,
                                                                                              "shift_by": 0,
                                                                                                "suffix": "_KNOB_POS",
+                                                                                                 "type": "integer"
+                                                                                      } ]
+                                                                  },
+                                               "ELEVATOR_TRIM_G": {
+                                                                          "category": "Control System",
+                                                                      "control_type": "analog_gauge",
+                                                                       "description": "Elevator Trim Gauge",
+                                                                        "identifier": "ELEVATOR_TRIM_G",
+                                                                            "inputs": [  ],
+                                                                           "outputs": [ {
+                                                                                              "address": 20678,
+                                                                                          "description": "gauge position",
+                                                                                                 "mask": 65535,
+                                                                                            "max_value": 65535,
+                                                                                             "shift_by": 0,
+                                                                                               "suffix": "",
                                                                                                  "type": "integer"
                                                                                       } ]
                                                                   },
@@ -718,6 +782,22 @@ docdata["P-51D"] =
                                                                                                  "type": "integer"
                                                                                       } ]
                                                                   },
+                                                 "RUDDER_TRIM_G": {
+                                                                          "category": "Control System",
+                                                                      "control_type": "analog_gauge",
+                                                                       "description": "Rudder Trim Gauge",
+                                                                        "identifier": "RUDDER_TRIM_G",
+                                                                            "inputs": [  ],
+                                                                           "outputs": [ {
+                                                                                              "address": 20676,
+                                                                                          "description": "gauge position",
+                                                                                                 "mask": 65535,
+                                                                                            "max_value": 65535,
+                                                                                             "shift_by": 0,
+                                                                                               "suffix": "",
+                                                                                                 "type": "integer"
+                                                                                      } ]
+                                                                  },
                                          "SAFE_LND_GEAR_LT_TEST": {
                                                                               "api_variant": "momentary_last_position",
                                                                                  "category": "Control System",
@@ -778,6 +858,40 @@ docdata["P-51D"] =
                                                                                              } ],
                                                                          "physical_variant": "push_button"
                                                                   }
+                               },
+                     "Damage": {
+                                   "WINDSHIELDCRACKS": {
+                                                               "category": "Damage",
+                                                           "control_type": "analog_gauge",
+                                                            "description": "Windshield Crack Holes",
+                                                             "identifier": "WINDSHIELDCRACKS",
+                                                                 "inputs": [  ],
+                                                                "outputs": [ {
+                                                                                   "address": 20670,
+                                                                               "description": "gauge position",
+                                                                                      "mask": 65535,
+                                                                                 "max_value": 65535,
+                                                                                  "shift_by": 0,
+                                                                                    "suffix": "",
+                                                                                      "type": "integer"
+                                                                           } ]
+                                                       },
+                                      "WINDSHIELDOIL": {
+                                                               "category": "Damage",
+                                                           "control_type": "led",
+                                                            "description": "Windshield Oil Splashes",
+                                                             "identifier": "WINDSHIELDOIL",
+                                                                 "inputs": [  ],
+                                                                "outputs": [ {
+                                                                                   "address": 20630,
+                                                                               "description": "0 if light is off, 1 if light is on",
+                                                                                      "mask": 8,
+                                                                                 "max_value": 1,
+                                                                                  "shift_by": 3,
+                                                                                    "suffix": "",
+                                                                                      "type": "integer"
+                                                                           } ]
+                                                       }
                                },
                     "Detrola": {
                                    "DETROLA_FREQUENCY": {
@@ -1660,18 +1774,18 @@ docdata["P-51D"] =
                                                      }
                                },
     "External Aircraft Model": {
-                                       "EXT_FORMATION_LIGHTS": {
+                                          "EXT_LANDING_LIGHT": {
                                                                        "category": "External Aircraft Model",
                                                                    "control_type": "metadata",
-                                                                    "description": "Formation Lights",
-                                                                     "identifier": "EXT_FORMATION_LIGHTS",
+                                                                    "description": "Landing Light (white)",
+                                                                     "identifier": "EXT_LANDING_LIGHT",
                                                                          "inputs": [  ],
                                                                         "outputs": [ {
                                                                                            "address": 20630,
-                                                                                       "description": "Formation Lights",
-                                                                                              "mask": 65535,
-                                                                                         "max_value": 65535,
-                                                                                          "shift_by": 0,
+                                                                                       "description": "Landing Light (white)",
+                                                                                              "mask": 128,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 7,
                                                                                             "suffix": "",
                                                                                               "type": "integer"
                                                                                    } ]
@@ -1704,6 +1818,118 @@ docdata["P-51D"] =
                                                                                               "mask": 16384,
                                                                                          "max_value": 1,
                                                                                           "shift_by": 14,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                    "EXT_POSITION_LIGHT_TAIL": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Tail Position Light (white)",
+                                                                     "identifier": "EXT_POSITION_LIGHT_TAIL",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20586,
+                                                                                       "description": "Tail Position Light (white)",
+                                                                                              "mask": 32768,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 15,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                         "EXT_RECOC_LIGHT_GN": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Green Recognition Light (green)",
+                                                                     "identifier": "EXT_RECOC_LIGHT_GN",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Green Recognition Light (green)",
+                                                                                              "mask": 2,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 1,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                         "EXT_RECOC_LIGHT_RD": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Red Recognition Light (red)",
+                                                                     "identifier": "EXT_RECOC_LIGHT_RD",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Red Recognition Light (red)",
+                                                                                              "mask": 1,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 0,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                         "EXT_RECOC_LIGHT_YE": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Amber Recognition Light (yellow)",
+                                                                     "identifier": "EXT_RECOC_LIGHT_YE",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Amber Recognition Light (yellow)",
+                                                                                              "mask": 4,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 2,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                               "EXT_WOW_LEFT": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Weight ON Wheels Left Gear",
+                                                                     "identifier": "EXT_WOW_LEFT",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Weight ON Wheels Left Gear",
+                                                                                              "mask": 64,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 6,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                              "EXT_WOW_RIGHT": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Weight ON Wheels Right Gear",
+                                                                     "identifier": "EXT_WOW_RIGHT",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Weight ON Wheels Right Gear",
+                                                                                              "mask": 32,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 5,
+                                                                                            "suffix": "",
+                                                                                              "type": "integer"
+                                                                                   } ]
+                                                               },
+                                               "EXT_WOW_TAIL": {
+                                                                       "category": "External Aircraft Model",
+                                                                   "control_type": "metadata",
+                                                                    "description": "Weight ON Wheels Tail Gear",
+                                                                     "identifier": "EXT_WOW_TAIL",
+                                                                         "inputs": [  ],
+                                                                        "outputs": [ {
+                                                                                           "address": 20630,
+                                                                                       "description": "Weight ON Wheels Tail Gear",
+                                                                                              "mask": 16,
+                                                                                         "max_value": 1,
+                                                                                          "shift_by": 4,
                                                                                             "suffix": "",
                                                                                               "type": "integer"
                                                                                    } ]
@@ -2788,7 +3014,7 @@ docdata["P-51D"] =
                                        "LANDING_GEAR_GREEN": {
                                                                      "category": "Light System",
                                                                  "control_type": "led",
-                                                                  "description": "Landing Gear Green Light",
+                                                                  "description": "Landing Gear Green Light (green)",
                                                                    "identifier": "LANDING_GEAR_GREEN",
                                                                        "inputs": [  ],
                                                                       "outputs": [ {
@@ -2804,7 +3030,7 @@ docdata["P-51D"] =
                                          "LANDING_GEAR_RED": {
                                                                      "category": "Light System",
                                                                  "control_type": "led",
-                                                                  "description": "Landing Gear Red Light",
+                                                                  "description": "Landing Gear Red Light (red)",
                                                                    "identifier": "LANDING_GEAR_RED",
                                                                        "inputs": [  ],
                                                                       "outputs": [ {
@@ -3368,7 +3594,7 @@ docdata["P-51D"] =
                                    "RADAR_WARNING_LIGHT": {
                                                                   "category": "Tail Warning Radar",
                                                               "control_type": "led",
-                                                               "description": "Radar Warning Light",
+                                                               "description": "Radar Warning Light (yellow)",
                                                                 "identifier": "RADAR_WARNING_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3625,7 +3851,7 @@ docdata["P-51D"] =
                                      "VHF_RADIO_A_LIGHT": {
                                                                   "category": "VHF Radio",
                                                               "control_type": "led",
-                                                               "description": "VHF Radio A Light",
+                                                               "description": "VHF Radio A Light (green)",
                                                                 "identifier": "VHF_RADIO_A_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3641,7 +3867,7 @@ docdata["P-51D"] =
                                      "VHF_RADIO_B_LIGHT": {
                                                                   "category": "VHF Radio",
                                                               "control_type": "led",
-                                                               "description": "VHF Radio B Light",
+                                                               "description": "VHF Radio B Light (green)",
                                                                 "identifier": "VHF_RADIO_B_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3777,7 +4003,7 @@ docdata["P-51D"] =
                                      "VHF_RADIO_C_LIGHT": {
                                                                   "category": "VHF Radio",
                                                               "control_type": "led",
-                                                               "description": "VHF Radio C Light",
+                                                               "description": "VHF Radio C Light (green)",
                                                                 "identifier": "VHF_RADIO_C_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3793,7 +4019,7 @@ docdata["P-51D"] =
                                      "VHF_RADIO_D_LIGHT": {
                                                                   "category": "VHF Radio",
                                                               "control_type": "led",
-                                                               "description": "VHF Radio D Light",
+                                                               "description": "VHF Radio D Light (green)",
                                                                 "identifier": "VHF_RADIO_D_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3839,7 +4065,7 @@ docdata["P-51D"] =
                                     "VHF_RADIO_TX_LIGHT": {
                                                                   "category": "VHF Radio",
                                                               "control_type": "led",
-                                                               "description": "VHF Radio TX Light",
+                                                               "description": "VHF Radio TX Light (white)",
                                                                 "identifier": "VHF_RADIO_TX_LIGHT",
                                                                     "inputs": [  ],
                                                                    "outputs": [ {
@@ -3900,6 +4126,27 @@ docdata["P-51D"] =
                                                                                            "type": "integer"
                                                                                 } ],
                                                             "physical_variant": "toggle_switch"
+                                                     },
+                                    "RKT_COUNT_CON": {
+                                                                    "category": "Weapon Control",
+                                                                "control_type": "discrete_dial",
+                                                                 "description": "Rockets Counter Control",
+                                                                  "identifier": "RKT_COUNT_CON",
+                                                                      "inputs": [ {
+                                                                                    "description": "switch to previous or next state",
+                                                                                      "interface": "fixed_step"
+                                                                                } ],
+                                                         "momentary_positions": "none",
+                                                                     "outputs": [ {
+                                                                                        "address": 20630,
+                                                                                    "description": "selector position",
+                                                                                           "mask": 3840,
+                                                                                      "max_value": 9,
+                                                                                       "shift_by": 8,
+                                                                                         "suffix": "",
+                                                                                           "type": "integer"
+                                                                                } ],
+                                                            "physical_variant": "infinite_rotary"
                                                      },
                                    "RKT_DEL_SWITCH": {
                                                                     "category": "Weapon Control",

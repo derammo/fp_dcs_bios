@@ -1,14 +1,23 @@
 ifdef::env-github[{set:link-ext:adoc}]
 ifndef::env-github[{set:link-ext:html}]
 
-== DCS-BIOS
+== Flightpanel DCS-BIOS fork
 
-DCS-BIOS is a community-maintained `Export.lua` file for use with http://www.digitalcombatsimulator.com/[DCS: World].
+DCS-BIOS is a `Export.lua` file for use with http://www.digitalcombatsimulator.com/[DCS: World].
 It provides a stable, documented interface for external hardware and software to interact with the clickable cockpit of a DCS: World aircraft.
 
   Info: Since the Website was down, every information is included in the Repositorie here.
   Also we add the arduino-library and com-handler to save it, so they don't get lost. 
   But we can't maintain them.
+
+This Version is not only for Flightpanels, its like the normal DCS-BIOS version before the BIOS-HUB versions.
+Works also for Pit Builders and Arduino users!
+
+  If want to support us! You find infos at the bottom of this page.
+  With that money, we buy the planes to bring them in BIOS to Live.
+  
+- Release/Prerelease are mostly for the stable version of DCS. 
+- DCS Beta Users should use the master branch of the fork. (Start a Flight before Programming to update the json Files)
 
 == For Panel Builders
 
@@ -24,13 +33,15 @@ The link:Scripts/DCS-BIOS/doc/developerguide.{link-ext}[Developer Guide] explain
 
 Currently, DCS-BIOS supports the following aircraft modules:
 
-* A-4E-C (contributed by Dehuman){ get the Mod here: https://forums.eagle.ru/showthread.php?p=3930571[Community A-4E-C Mod in ED Forums] }
+* A-4E-C (contributed by Dehuman) { get the Mod here: https://forums.eagle.ru/showthread.php?p=3930571[Community A-4E-C Mod in ED Forums] }
 * A-10C (contributed by FSF-Ian)
+* AH-6J (contributed by BlackLibrary) { get the Mod here: https://forums.eagle.ru/showthread.php?t=267143[Helicopter EFM Demo in ED Forums] }
 * AJS-37 (contributed by pdmarsh extended by BlackLibrary,ArturDCS,Matchstick)
 * AV8BNA (contributed by BlackLibrary,Matchstick)
 * Bf-109-K-4 (contributed by ArturDCS)
 * C-101CC / EB (contributed by BlackLibrary,cdpkobra) (use C-101CC for All Versions)
 * Christen Eagle II (contributed by BlackLibrary,cdpkobra)
+* Edge-540 (contributed by BlackLibrary) { get the Mod here: http://virtualairrace.com/edge-540-mod/[Website of VIRTUAL AIR RACING SERIES] }
 * F-14B (contributed by BlackLibrary,ArturDCS,Bullitt)
 * F-16C (contributed by BlackLibrary,cdpkobra,Matchstick,BuzzKillington)
 * F-5E-3 (contributed by geebeer2, extended by BlackLibrary)
@@ -44,20 +55,22 @@ Currently, DCS-BIOS supports the following aircraft modules:
 * Ka-50 (contributed by airtom)
 * L-39ZA / C (contributed by kadda11, revised by BlackLibrary) (use L-39ZA for All Versions)
 * M-2000C (contributed by Exo7,ArturDCS,Matchstick)
-* MB-339PAN (contributed by BlackLibrary){ get the Mod here: http://www.freccetricolorivirtuali.net[Frecce Tricolori Virtuali] }
+* MB-339PAN (contributed by BlackLibrary) { get the Mod here: http://www.freccetricolorivirtuali.net[Frecce Tricolori Virtuali] }
 * Mi-8 (contributed by ArturDCS)
 * MiG-15bis (contributed by BlackLibrary,Steve Gee)
 * MiG-21Bis (contributed by wraith444)
 * NS430 (contributed by Capt_Zeen, extended by Imp, revised by Celemourn)
+* P-47D (contributed by BlackLibrary and Donators)
 * P-51D (contributed by pdmarsh)
 * Spitfire (revised by BlackLibrary)
 * SA 342 (all Versions; use SA342M for All)
 * TF-51D (contributed by pdmarsh, ArturDCS)
 * UH-1H (contributed by FSF-Ian)
 * Yak-52 (contributed by BlackLibrary,cdpkobra)
-* Externals for all Airplanes (Speedbrake and Lights)
+* Externals for all Airplanes (Speedbrake and Lights; Weight on Wheels Code from DeadMeat)
 * All Flaming Cliffs 3 Modules (FC3) (A-10A; F-15C; J-11A; MiG-29A;
   MiG-29S; Su-25; Su-25T; Su-27; Su-33)
+* Superbug Mod (F-18 E+F+Growler)
 * Mods (FC3): VSN-Mods, PAK-FA Project, Civil Aircraft Mod, Upuaut's Bell-47G, Mirage F.1, SU-30 FAMILY PROJECT, MIG-23UB Project,
               Virtual Cockpits, AC-130
   
@@ -91,11 +104,11 @@ In MetadataStat you find the Plane Name.
 6. Start DCS, load a Mission and jump in a Plane
 7. Click "Apps" in your Browser. Your DCS-BIOS extension be there. From there you can see the controls change as you fly and manipulate the cockpit. 
 
-  Remember to refresh the page if you restart a mission, so Chrome gets a new connection to DCS-BIOS.
+  Remember to Close & Restart the page after you restart/change a mission, so Chrome gets a new connection to DCS-BIOS.
   
 == socat
 
-There are 2 socat vesions, 32 and 64 bit. Choose that version that fits best for you. 
+There are 3 socat versions, 32, 64 bit and for UNIX systems. Choose that version that fits best for you. 
 The files in the zip File must be unzipped direct in the socat folder.
 
   The path must be: /socat/socat.exe
@@ -106,13 +119,13 @@ https://www.youtube.com/channel/UCwECFPfC3QJiNYS5fskF2vg/[DCS-BIOS Channel on Yo
 
 == Contribute
 
-If you have a question or found a bug, please https://github.com/dcs-bios/dcs-bios/issues/new[open an issue on the GitHub issue tracker].
+If you have a question or found a bug, please https://github.com/DCSFlightpanels/dcs-bios/issues[open an issue on the GitHub issue tracker].
 
 If you want to contribute code or documentation, please send a pull request on GitHub.
 
 == License
 
-The https://github.com/dcs-bios/dcs-bios[orginal DCS-BIOS] was programmed by [FSF]Ian. This is a Fork of his Repositorie, where we made some additions and changes to it.
+The https://github.com/dcs-bios/dcs-bios[orginal DCS-BIOS] was programmed by [FSF]Ian. This is a Fork of his older Repositorie, where we made some additions and changes to it.
 
 DCS-BIOS is released under a slightly modified Simple Public License 2.0 (think "a version of the GPL readable by mere mortals"). Please see `DCS-BIOS-License.txt`.
 
@@ -121,8 +134,9 @@ The copy of `socat` that comes with DCS-BIOS is licensed under the GPLv2 (see `s
 == Support
 
 * Here you find our https://discord.gg/5svGwKX[DCSFlightpanels Discord Server]
-* Here you find the https://github.com/DCSFlightpanels/DCSFlightpanels[DCSFlightPanels]
+* Here you find the https://github.com/DCSFlightpanels/DCSFlightpanels[DCSFlightPanels Software]
 * Here you find the https://github.com/DCSFlightpanels/DCS-Flightpanels-Profiles[DCS-Flightpanels-Profiles]
-* If you want to support us: https://www.paypal.me/jerkerdahlblom[Here you can Donate.] 
 
-                      (Donations were 100% spend for new Planes, to keep the Projekt alive)
+* If you want to support us: https://www.paypal.me/FPDCSBIOS[Here you can Donate.] 
+
+                      (Donations were 100% spend for new Planes, to keep the Projekt alive and uptodate)

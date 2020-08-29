@@ -1,25 +1,16 @@
------------------------------------------------------------
---  ____   ____ ____    ____ ___ ___  ____  
--- |  _ \ / ___/ ___|  | __ |_ _/ _ \/ ___| 
--- | | | | |   \___ \  |  _ \| | | | \___ \ 
--- | |_| | |___ ___) | | |_) | | |_| |___) |
--- |____/ \____|____/  |____|___\___/|____/ 
---                                          
+-----------------------------------------------------------                                         
 --     LIBRARY     	:    Mirage 2000C RAZBAM
---     CONTIBUTORS 	:    Exo7, Ergo, Matchstick, WarLord 
---     LINK        	:    https://github.com/Exo7/DCS_BIOS-M2000C_Library/releases/latest
---     VERSION     	:    v1.25
---
+--     VERSION     	:    v1.28a
 -----------------------------------------------------------
 -- Release log : 
 -- v1.12 by Exo7 
 --      Original stuff
 -- 
--- v1.12-mod-Ergo-1 by Ergo
+-- v1.12 by Ergo
 --      Adding INS Parameter Selector 
 --      Adding INS VAL Button 
 --
--- v1.12-mod-Ergo-2 by Ergo
+-- v1.12 by Ergo
 --      Adding all PCN text in PCN_DISP
 --
 -- v1.13 by Exo7
@@ -42,20 +33,12 @@
 -- v1.17 by Exo7
 --		Modifying Memory Allocation Address to match with existants modules
 --
--- v1.18 by Exo7
---		Bug Fixes
---
--- v1.19 by Exo7
---		Bug Fixes empty buffer block export
---
--- v1.20 by Exo7
+-- v1.18-20 by Exo7
 -- 		Bug Fixes : Export displays functions
 --					New Arg Numbers
+--					Empty buffer block export
 --
--- v1.21 by WarLord
---		Bug Fixes
---
--- v1.22 by WarLord
+-- v1.21-22 by WarLord
 --		Bug Fixes
 --
 -- v1.23 by Matchstick
@@ -69,6 +52,14 @@
 --
 -- v1.26 by WarLord
 --		fixing the BCD Wheels
+--
+-- v1.27a by WarLord, Matchstick
+--		fixing readouts;UHF Preset fixed;cleanup
+--
+-- v1.27b by WarLord add WoW Code
+--
+-- v1.28a by MisterKnife, WarLord
+--		fixed landing toggle and HSI knobs,Fix for inverted Gearlight 
 -----------------------------------------------------------
 
 BIOS.protocol.beginModule("M-2000C", 0x7200)
@@ -82,6 +73,7 @@ local document = BIOS.util.document
 local parse_indication = BIOS.util.parse_indication
 
 local defineIndicatorLight = BIOS.util.defineIndicatorLight
+local defineIndicatorLightInverted = BIOS.util.defineIndicatorLightInverted
 local definePushButton = BIOS.util.definePushButton
 local definePotentiometer = BIOS.util.definePotentiometer
 local defineRotary = BIOS.util.defineRotary
@@ -98,7 +90,7 @@ local defineIntegerFromGetter = BIOS.util.defineIntegerFromGetter
 -- Get Displays Functions
 
 local function getUHFFrequency()
-	local li = list_indication(9)
+	local li = list_indication(7)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
 		local name, value = m()
@@ -115,7 +107,7 @@ end
  
 
  local function getVHFFrequency()
-	local li = list_indication(9)
+	local li = list_indication(7)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
 		local name, value = m()
@@ -130,7 +122,7 @@ return "         "
  end
 
  local function getFuelFlow()
-	local li = list_indication(5)
+	local li = list_indication(3)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -144,40 +136,40 @@ return "         "
 return "         "
 end
 
+-- 04 Apr 2020 - ECM BOX modified in recent versions of M2000C module cockpit so display functions have been removed
+--local function getEMDisp()
+--	local li = list_indication(3)
+--	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
+--	while true do
+--        local name, value = m()
+--        if not name then break end
+--		if name == "text_ECM_CHF"
+--        then
+--        value = "   "..value
+--        return value:sub(-3)
+--      end
+--    end
+--return "         "
+--end
 
-local function getEMDisp()
-	local li = list_indication(3)
-	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
-	while true do
-        local name, value = m()
-        if not name then break end
-		if name == "text_ECM_CHF"
-        then
-        value = "   "..value
-        return value:sub(-3)
-      end
-    end
-return "         "
-end
 
-
-local function getIRDisp()
-	local li = list_indication(4)
-	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
-	while true do
-        local name, value = m()
-        if not name then break end
-		if name == "text_ECM_FLR"
-        then
-        value = "   "..value
-        return value:sub(-3)
-      end
-    end
-return "         "
-end
+--local function getIRDisp()
+--	local li = list_indication(4)
+--	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
+--	while true do
+--        local name, value = m()
+--        if not name then break end
+--		if name == "text_ECM_FLR"
+--        then
+--        value = "   "..value
+--        return value:sub(-3)
+--      end
+--    end
+--return "         "
+--end
 
 local function getPCAUR1Disp()
-	local li = list_indication(6)
+	local li = list_indication(4)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -192,7 +184,7 @@ return "         "
 end
 
 local function getPCAUR2Disp()
-	local li = list_indication(6)
+	local li = list_indication(4)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -207,7 +199,7 @@ return "         "
 end
 
 local function getPCAUR3Disp()
-	local li = list_indication(6)
+	local li = list_indication(4)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -222,7 +214,7 @@ return "         "
 end
 
 local function getPCAUR4Disp()
-	local li = list_indication(6)
+	local li = list_indication(4)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -237,7 +229,7 @@ return "         "
 end
 
 local function getPCAUR5Disp()
-	local li = list_indication(6)
+	local li = list_indication(4)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -253,7 +245,7 @@ end
 
 
 local function getPCABR1Disp()
-	local li = list_indication(7)
+	local li = list_indication(5)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -268,7 +260,7 @@ return "         "
 end
 
 local function getPCABR2Disp()
-	local li = list_indication(7)
+	local li = list_indication(5)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -283,7 +275,7 @@ return "         "
 end
 
 local function getPCABR3Disp()
-	local li = list_indication(7)
+	local li = list_indication(5)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -298,7 +290,7 @@ return "         "
 end
 
 local function getPCABR4Disp()
-	local li = list_indication(7)
+	local li = list_indication(5)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -313,7 +305,7 @@ return "         "
 end
 
 local function getPCABR5Disp()
-	local li = list_indication(7)
+	local li = list_indication(5)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -328,7 +320,7 @@ return "         "
 end
 
 local function getPPAQtyDisp()
-	local li = list_indication(8)
+	local li = list_indication(6)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -343,7 +335,7 @@ return "         "
 end
 
 local function getPPAIntDisp()
-	local li = list_indication(8)
+	local li = list_indication(6)
 	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
 	while true do
         local name, value = m()
@@ -358,7 +350,7 @@ return "         "
 end
 
 local function getPCNDispL() -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    while true do
         local name, value = m()
@@ -373,7 +365,7 @@ return "         "
 end
 
 local function getPCNDispR() -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    while true do
         local name, value = m()
@@ -388,7 +380,7 @@ return "         "
 end
 
 local function getPCNDigitR()  -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    local count = 0
    local ret = " "
@@ -421,7 +413,7 @@ return ret
 end
 
 local function getPCNDigitL()  -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    local count = 0
    local ret = " "
@@ -454,7 +446,7 @@ return ret
 end
 
 local function getPCN2DigitR()  -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    local east = ""
    local west = ""
@@ -484,7 +476,7 @@ local function getPCN2DigitR()  -- by Ergo
 end
 
 local function getPCN2DigitL()  -- by Ergo
-   local li = list_indication(10)
+   local li = list_indication(9)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    local north = ""
    local south = ""
@@ -514,7 +506,7 @@ local function getPCN2DigitL()  -- by Ergo
 end
 
 local function getPCNDispDest()  -- by Ergo
-   local li = list_indication(11)
+   local li = list_indication(10)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    while true do
         local name, value = m()
@@ -535,7 +527,7 @@ return "         "
 end
 
 local function getPCNDispPrep() -- by Ergo
-   local li = list_indication(11)
+   local li = list_indication(10)
    local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
    while true do
         local name, value = m()
@@ -693,12 +685,18 @@ defineIndicatorLight("CONF_AUX", 418, "CONFIGURATION PANEL", "O - CONF - Aux Lan
 defineIndicatorLight("CONF_D", 419, "CONFIGURATION PANEL", "O - CONF - Right Landing Gear Light")
 
 -- ECM BOX
-defineToggleSwitch("ECM_BOX_SW", 13, 3195, 195, "ECM BOX", "I - ECM Box Switch")
-defineToggleSwitch("ECM_BOX_LGT_SW", 13, 3196, 196, "ECM BOX", "I - ECM Box Lights Switch")
-defineTumb("ECM_BOX_MODE_SW", 13, 3194, 194, 0.5, {0, 1}, nil, false, "ECM BOX", "I - ECM Box Mode Switch")
-definePotentiometer("ECM_BOX_LCD_BRIGHT", 13, 3197, 197, {0, 1}, "ECM BOX", "I - ECM Box LCD Display Brightness")
-defineString("ECM_FLR_DISP", getIRDisp, 3, "ECM BOX", "O - ECM Box FLR Display")
-defineString("ECM_EM_DISP", getEMDisp, 3, "ECM BOX", "O - ECM Box EM Display")
+-- 04 Apr 2020 - ECM BOX modified in recent versions of M2000 module cockpit so old items removed and replaced with current ones
+--defineToggleSwitch("ECM_BOX_SW", 13, 3195, 195, "ECM BOX", "I - ECM Box Switch")
+--defineToggleSwitch("ECM_BOX_LGT_SW", 13, 3196, 196, "ECM BOX", "I - ECM Box Lights Switch")
+--defineTumb("ECM_BOX_MODE_SW", 13, 3194, 194, 0.5, {0, 1}, nil, false, "ECM BOX", "I - ECM Box Mode Switch")
+--definePotentiometer("ECM_BOX_LCD_BRIGHT", 13, 3197, 197, {0, 1}, "ECM BOX", "I - ECM Box LCD Display Brightness")
+--defineString("ECM_FLR_DISP", getIRDisp, 3, "ECM BOX", "O - ECM Box FLR Display")
+--defineString("ECM_EM_DISP", getEMDisp, 3, "ECM BOX", "O - ECM Box EM Display")
+definePushButton("ECM_BOX_BLT_SW", 13, 3990, 990, "ECM BOX", "I - ECM Box Clear Button")
+defineIndicatorLight("ECM_BOX_LL", 991, "ECM BOX", "O - ECM Box LL Light (green)")
+defineIndicatorLight("ECM_BOX_EM", 992, "ECM BOX", "O - ECM Box EM EM Light (yellow)")
+defineIndicatorLight("ECM_BOX_IR", 993, "ECM BOX", "O - ECM Box IR Light (yellow)")
+defineIndicatorLight("ECM_BOX_EO", 994, "ECM BOX", "O - ECM Box EO Light (yellow)")
 
 --ENVIRONMENT CONTROL PANEL
 defineToggleSwitch("ECS_MAIN_MODE_SW", 25, 3630, 630, "ECS PANEL", "I - ECS Main Mode Switch")
@@ -742,7 +740,7 @@ defineToggleSwitch("ANTI-COL_LGT_SW", 16, 3453, 453, "EXT LIGHTS", "I - Anti-Col
 defineToggleSwitch("NAV_LGT_SW", 16, 3454, 454, "EXT LIGHTS", "I - Navigation Lights Switch")
 defineToggleSwitch("FORM_LGT_SW", 16, 3455, 455, "EXT LIGHTS", "I - Formation Lights Switch")
 definePotentiometer("REFUEL_LGT_BRIGHT_KNOB", 16, 3920, 920, {0, 1}, "EXT LIGHTS", "I - Refuel Lights Brightness Knob")
-defineTumb("LDG_LGT_SW", 16, 3450, 450, 1, {-1, 1}, nil, false, "EXT LIGHTS", "I - Landing Lights Switch")
+defineTumb("LDG_LGT_SW", 16, 3450, 450, 0.5, {0, 1}, nil, false, "EXT LIGHTS", "I - Landing Lights Switch")
 
 -- FUEL SYSTEM
 defineMultipositionSwitch("AAR_SW", 7, 3193, 193, 3, 0.5, "FUEL SYSTEM", "I - Air Refuel Transfer Switch")
@@ -763,7 +761,6 @@ defineFloat("FUEL_DETOT_TENS", 354, {0, 1}, "FUEL SYSTEM", "O - FUEL - x10 DETOT
 defineFloat("FUEL_JAUG_G", 358, {0, 1}, "FUEL SYSTEM", "O - FUEL - LEFT JAUGE display")
 defineFloat("FUEL_JAUG_D", 359, {0, 1}, "FUEL SYSTEM", "O - FUEL - RIGHT JAUGE display")
 
-
 defineIndicatorLight("FUEL_RL_G", 362, "FUEL SYSTEM", "O - FUEL - Left RL Light")
 defineIndicatorLight("FUEL_RL_M", 363, "FUEL SYSTEM", "O - FUEL - Center RL Light")
 defineIndicatorLight("FUEL_RL_D", 364, "FUEL SYSTEM", "O - FUEL - Right RL Light")
@@ -777,8 +774,8 @@ defineString("FUEL_FLOW", getFuelFlow, 3, "FUEL SYSTEM", "O - FUEL - Fuel Flow D
 defineFloat("GMETER_NEEDLE", 347, {-1, 1}, "G-METER", "O - ACC - G Needle")
 
 -- HSI
-definePotentiometer("HSI_VAD_SEL", 2, 3340, 340, {0, 1}, "HSI", "I - HSI - VAD Selector")
-defineTumb("HSI_MODE_SEL_SW", 2, 3341, 341, 0.2, {0, 1}, nil, false, "HSI", "I - HSI - Mode Selector Switch")
+defineTumb("HSI_VAD_SEL", 2, 3340, 340, 0.1, {0, 1}, nil, true, "HSI", "I - HSI - VAD Selector")
+defineTumb("HSI_MODE_SEL_SW", 2, 3341, 341, 0.1, {0, 1}, nil, false, "HSI", "I - HSI - Mode Selector Switch")
 defineFloat("HSI_HDG", 333, {0, 1}, "HSI", "O - HSI - AP Heading (Green Arrow)")
 defineFloat("HSI_D_NEEDLE", 334, {0, 1}, "HSI", "O - HSI - COURSE (Double Needle)")
 defineFloat("HSI_NEEDLE", 335, {0, 1}, "HSI", "O - HSI - VAD (Simple Needle)")
@@ -854,7 +851,7 @@ defineToggleSwitch("FBW_GAIN_MODE_SW_COV", 3, 3420, 420, "LEFT PANEL", "I - FBW 
 defineToggleSwitch("FBW_GAIN_MODE_SW", 3, 3421, 421, "LEFT PANEL", "I - FBW - Gain Mode Switch")
 defineToggleSwitch("FBW_G-LIM_SW", 3, 3422, 422, "LEFT PANEL", "I - FBW - G-Limiter Switch")
 defineToggleSwitch("FBW_RESET_BTN", 17, 3423, 423, "LEFT PANEL", "I - FBW - Reset Button")
-defineIndicatorLight("LANDING_GEAR_LEVER_LIGHT", 405, "LEFT PANEL", "O - LDG - Landing Gear Lever Light")
+defineIndicatorLightInverted("LANDING_GEAR_LEVER_LIGHT", 405, "LEFT PANEL", "O - LDG - Landing Gear Lever Light")
 definePushButton("EMER_JETT", 6, 3409, 409, "LEFT PANEL", "I - Emergency Jettison Button")
 defineToggleSwitch("GUN_ARM_SW", 6, 3463, 463, "LEFT PANEL", "I - Gun Arm/Safe Switch")
 defineFloat("PSV_EL_G_EXT", 424, {0, 1}, "LEFT PANEL", "O - PSV - Left Ext Elevon Position display")
@@ -1081,7 +1078,8 @@ defineIndicatorLight("TEST_VERT", 513, "TEST PANEL", "O - TEST - Green Indicator
 
 -- VHF RADIO
 defineMultipositionSwitch("VHF_MODE", 19, 3950, 950,  7, 0.10, "VHF RADIO", "I - VHF - MODE Switch")
-defineMultipositionSwitch("VHF_CH_SEL", 19, 3951, 951, 20, 0.05, "VHF RADIO", "I - VHF - Channel Selector")
+--defineMultipositionSwitch("VHF_CH_SEL", 19, 3951, 951, 20, 0.05, "VHF RADIO", "I - VHF - Channel Selector")
+defineTumb("VHF_CH_SEL", 19, 3951, 951, 0.05, {0, 0.95}, {" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, true, "VHF RADIO", "I - VHF - Channel Selector")
 definePushButton("VHF_MEM_CLR", 19, 3952, 952, "VHF RADIO", "I - VHF - MEM/CLR Button")
 definePushButton("VHF_VLD_XFR", 19, 3953, 953, "VHF RADIO", "I - VHF -  VLD/XFR Button")
 definePushButton("VHF_1_READ", 19, 3954, 954, "VHF RADIO", "I - VHF - 1/READ Button")
@@ -1103,7 +1101,7 @@ defineToggleSwitch("UHF_PWR_5W_25W_SW", 20, 3429, 429, "UHF RADIO", "I - UHF - P
 defineToggleSwitch("UHF_SIL_SW", 20, 3430, 430, "UHF RADIO", "I - UHF - SIL Switch")
 defineToggleSwitch("UHF_CDE_SW", 20, 3432, 432, "UHF RADIO", "I - UHF - CDE Switch")
 definePushButton("UHF_TEST_SW", 20, 3434, 434, "UHF RADIO", "I - UHF - TEST Switch")
-defineSetCommandTumb("UHF_PRESET_KNOB", 20, 3435, 435, 0.05, {0.05, 1}, nil, true, "UHF RADIO", "Preset Knob UHF")
+defineSetCommandTumb("UHF_PRESET_KNOB", 20, 3435, 435, 0.05, {0, 1}, {" 1", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}, true, "UHF RADIO", "Preset Knob UHF")
 defineTumb("UHF_E+A2_SW", 20, 3431, 431, 1, {-1, 1}, nil, false, "UHF RADIO", "I - UHF - E+A2 Switch")
 defineFloat("UHF_PRESET", 436, {0, 1}, "UHF RADIO", "O - UHF - PRESET Display")
 defineString("UHF_FREQUENCY", getUHFFrequency, 5, "UHF RADIO", "O - UHF - Frequency Report Display")
@@ -1117,7 +1115,7 @@ defineToggleSwitch("VORILS_TEST_DIAL", 24, 3619, 619, "VOR / ILS", "I - VOR/ILS 
 -- VTB
 defineToggleSwitch("VTB_PWR_SW", 5, 3221, 221, "VTB", "I - VTB - Power Switch")
 defineToggleSwitch("VTB_DEC", 5, 3222, 222, "VTB", "I - VTB - Declutter (ALLEG)")
-defineToggleSwitch("VTB_OR_SEL", 5, 3223, 223, "VTB", "I - VTB - Orientation Selector (Inop) (CADR)")
+defineToggleSwitch("VTB_OR_SEL", 5, 3223, 223, "VTB", "I - VTB - Orientation Selector (CADR)")
 defineMultipositionSwitch("VTB_ICONS_BRIGHT", 5, 3224, 224, 8, 0.1, "VTB", "I - VTB - Icons and Rulers Brightness (MRQ)")
 defineMultipositionSwitch("VTB_VIDEO_BRIGHT", 5, 3225, 225, 8, 0.1, "VTB", "I - VTB - Video Brightness (LUM GEN)")
 defineMultipositionSwitch("VTB_DISP_CONTRAST", 5, 3226, 226, 8, 0.1, "VTB", "I - VTB - Display Contrast (CONTRAST)")
@@ -1151,7 +1149,6 @@ defineFloat("VARIO_NEEDLE", 324, {-1, 1}, "VVI", "O - VVI - Needle")
 defineToggleSwitch("NVG_HELMET_MOUNT", 31, 3002, 1, "NVG", "I - NVG - Mount/Unmount NVG on Helmet")
 defineToggleSwitch("NVG_STOW", 31, 3001, 2, "NVG", "I - NVG - STOW/UNSTOW NVG")
 defineToggleSwitch("NVG_LIGHT_FILTER_SW", 16, 3672, 672, "NVG", "I - NVG - NVG Lights Filter Switch")
-
 
 defineIndicatorLight("UHF_REP_L_1", 187, "UHF RADIO", "UHF Repeater COM1 Light (green)")
 defineIndicatorLight("UHF_REP_L_2", 188, "UHF RADIO", "UHF Repeater COM2 Light (green)")
@@ -1199,5 +1196,14 @@ defineIntegerFromGetter("EXT_FORMATION_LIGHTS_AFT", function()
 	return math.floor(LoGetAircraftDrawArgumentValue(201)*65535)
 end, 65535, "External Aircraft Model", "Aft Formation Lights")
 
+defineIntegerFromGetter("EXT_WOW_NOSE", function()
+	if LoGetAircraftDrawArgumentValue(1) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Nose Gear")
+defineIntegerFromGetter("EXT_WOW_RIGHT", function()
+	if LoGetAircraftDrawArgumentValue(4) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Right Gear")
+defineIntegerFromGetter("EXT_WOW_LEFT", function()
+	if LoGetAircraftDrawArgumentValue(6) > 0 then return 1 else return 0 end
+end, 1, "External Aircraft Model", "Weight ON Wheels Left Gear")
 
 BIOS.protocol.endModule()
